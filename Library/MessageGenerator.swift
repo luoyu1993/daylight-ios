@@ -57,6 +57,30 @@ struct MessageGenerator {
         return self.longerMoreThanAMinuteMessages[index]
     }
 
+
+    private var longerOneMinuteMessages: [Message] {
+        var messages = [Message]()
+
+        messages.append(Message(format: "Today is **%@ minute** longer than yesterday. Happy days!"))
+        messages.append(Message(format: "The sun is out for **%@ more minute** today. Enjoy!"))
+        messages.append(Message(format: "**%@ extra minute** of sunshine today. Make them count!"))
+        messages.append(Message(format: "Make sure to soak up that vitamin D. **%@ more minute** of daylight today!"))
+        messages.append(Message(format: "Smile! Today has **%@ more minute** of daylight than yesterday!"))
+        messages.append(Message(format: "**%@ more minute** of daylight today. Just let it sink in…"))
+        messages.append(Message(format: "Today is **%@ minute** longer. It’s getting better and better!"))
+        messages.append(Message(format: "Bring out your shorts, because today has **%@ more minute** of sunlight."))
+        messages.append(Message(format: "Have a great day and enjoy those **%@ extra minute** of daylight."))
+        messages.append(Message(format: "After darkness comes daylight. **%@ more minute** to be precise!"))
+
+        return messages
+    }
+
+    private func longerOneMinuteMessage() -> Message {
+        let index = Int(arc4random_uniform(UInt32(self.shorterMoreThanAMinuteMessages.count)))
+
+        return self.longerOneMinuteMessages[index]
+    }
+
     private var longerLessThanAMinuteMessages: [Message] {
         var messages = [Message]()
 

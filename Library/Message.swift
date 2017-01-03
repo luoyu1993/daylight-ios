@@ -3,15 +3,19 @@ import UIKit
 struct Message {
     enum Kind: Int {
         case longerMoreThanAMinute
+        case longerOneMinute
         case longerLessThanAMinute
 
         case shorterMoreThanAMinute
+        case shorterOneMinute
         case shorterLessThanAMinute
 
         case longerTomorrowMoreThanAMinute
+        case longerTomorrowOneMinute
         case longerTomorrowLessThanAMinute
 
         case shorterTomorrowMoreThanAMinute
+        case shorterTomorrowOneMinute
         case shorterTomorrowLessThanAMinute
 
         init(sunPhase: SunPhase, yesterdayDaylightLength: Double, todayDaylightLength: Double, tomorrowDaylightLength: Double) {
@@ -22,22 +26,46 @@ struct Message {
                 if tomorrowIsLonger {
                     let longerTomorrowMoreThanAMinute = tomorrowDaylightLength - todayDaylightLength > 60
 
-                    kindRawValue =  longerTomorrowMoreThanAMinute ? Message.Kind.longerTomorrowMoreThanAMinute.rawValue : Message.Kind.longerTomorrowLessThanAMinute.rawValue
+                    if longerTomorrowMoreThanAMinute > 1 {
+                        Message.Kind.longerTomorrowMoreThanAMinute.rawValue
+                    } else if longerTomorrowMoreThanAMinute > 0 {
+                        Message.Kind.longerTomorrowOneMinute.rawValue
+                    } else {
+                        Message.Kind.longerTomorrowLessThanAMinute.rawValue
+                    }
                 } else {
                     let shorterTomorrowMoreThanAMinute = todayDaylightLength - tomorrowDaylightLength > 60
 
-                    kindRawValue = shorterTomorrowMoreThanAMinute ? Message.Kind.shorterTomorrowMoreThanAMinute.rawValue : Message.Kind.shorterTomorrowLessThanAMinute.rawValue
+                    if shorterTomorrowMoreThanAMinute > 1 {
+                        Message.Kind.shorterTomorrowMoreThanAMinute.rawValue
+                    } else if shorterTomorrowMoreThanAMinute > 0 {
+                        Message.Kind.shorterTomorrowOneMinute.rawValue
+                    } else {
+                        Message.Kind.shorterTomorrowLessThanAMinute.rawValue
+                    }
                 }
             } else {
                 let todayIsLonger = todayDaylightLength - yesterdayDaylightLength > 0
                 if todayIsLonger {
                     let longerMoreThanAMinute = todayDaylightLength - yesterdayDaylightLength > 60
 
-                    kindRawValue = longerMoreThanAMinute ? Message.Kind.longerMoreThanAMinute.rawValue : Message.Kind.longerLessThanAMinute.rawValue
+                    if longerMoreThanAMinute > 1 {
+                        Message.Kind.longerMoreThanAMinute.rawValue
+                    } else if longerMoreThanAMinute > 0 {
+                        Message.Kind.longerOneMinute.rawValue
+                    } else {
+                        Message.Kind.longerLessThanAMinute.rawValue
+                    }
                 } else {
                     let shorterMoreThanAMinute = yesterdayDaylightLength - todayDaylightLength > 60
 
-                    kindRawValue = shorterMoreThanAMinute ? Message.Kind.shorterMoreThanAMinute.rawValue : Message.Kind.shorterLessThanAMinute.rawValue
+                    if shorterMoreThanAMinute > 1 {
+                        Message.Kind.shorterMoreThanAMinute.rawValue
+                    } else if shorterMoreThanAMinute > 0 {
+                        Message.Kind.shorterOneMinute.rawValue
+                    } else {
+                        Message.Kind.shorterLessThanAMinute.rawValue
+                    }
                 }
             }
 

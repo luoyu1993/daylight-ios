@@ -117,14 +117,9 @@ class MainController: UIViewController {
         let sunPhase = location.sunPhase
         let (backgroundColor, textColor) = Theme.colors(for: sunPhase)
 
-        let interval = location.dayLengthDifference
-
         let messageGenerator = MessageGenerator()
-        let minutesString = interval.minuteString()
-        let generatedMessage = messageGenerator.message(forDay: Date(), sunPhase: location.sunPhase, yesterdayDaylightLength: location.yesterdayDaylightLength, todayDaylightLength: location.todayDaylightLength, tomorrowDaylightLength: location.tomorrowDaylightLength)
+        let message = messageGenerator.message(forDay: Date(), sunPhase: location.sunPhase, yesterdayDaylightLength: location.yesterdayDaylightLength, todayDaylightLength: location.todayDaylightLength, tomorrowDaylightLength: location.tomorrowDaylightLength)
 
-        let formattedMessage = String(format: generatedMessage.format, minutesString)
-        let message = Message(format: formattedMessage)
         let attributedString = message.attributedString(withTextColor: textColor)
 
         UIView.animate(withDuration: 0.4) {

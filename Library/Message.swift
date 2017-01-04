@@ -24,47 +24,47 @@ struct Message {
             if sunPhase == .night {
                 let tomorrowIsLonger = tomorrowDaylightLength - todayDaylightLength > 0
                 if tomorrowIsLonger {
-                    let longerTomorrowMoreThanAMinute = tomorrowDaylightLength - todayDaylightLength > 60
+                    let addedTimeInSeconds = tomorrowDaylightLength - todayDaylightLength
 
-                    if longerTomorrowMoreThanAMinute > 1 {
-                        Message.Kind.longerTomorrowMoreThanAMinute.rawValue
-                    } else if longerTomorrowMoreThanAMinute > 0 {
-                        Message.Kind.longerTomorrowOneMinute.rawValue
+                    if addedTimeInSeconds > 150 {
+                        kindRawValue = Message.Kind.longerTomorrowMoreThanAMinute.rawValue
+                    } else if addedTimeInSeconds > 60 {
+                        kindRawValue = Message.Kind.longerTomorrowOneMinute.rawValue
                     } else {
-                        Message.Kind.longerTomorrowLessThanAMinute.rawValue
+                        kindRawValue = Message.Kind.longerTomorrowLessThanAMinute.rawValue
                     }
                 } else {
-                    let shorterTomorrowMoreThanAMinute = todayDaylightLength - tomorrowDaylightLength > 60
+                    let subtractedTimeInSeconds = todayDaylightLength - tomorrowDaylightLength
 
-                    if shorterTomorrowMoreThanAMinute > 1 {
-                        Message.Kind.shorterTomorrowMoreThanAMinute.rawValue
-                    } else if shorterTomorrowMoreThanAMinute > 0 {
-                        Message.Kind.shorterTomorrowOneMinute.rawValue
+                    if subtractedTimeInSeconds > 150 {
+                        kindRawValue = Message.Kind.shorterTomorrowMoreThanAMinute.rawValue
+                    } else if subtractedTimeInSeconds > 60 {
+                        kindRawValue = Message.Kind.shorterTomorrowOneMinute.rawValue
                     } else {
-                        Message.Kind.shorterTomorrowLessThanAMinute.rawValue
+                        kindRawValue = Message.Kind.shorterTomorrowLessThanAMinute.rawValue
                     }
                 }
             } else {
                 let todayIsLonger = todayDaylightLength - yesterdayDaylightLength > 0
                 if todayIsLonger {
-                    let longerMoreThanAMinute = todayDaylightLength - yesterdayDaylightLength > 60
+                    let addedTimeInSeconds = todayDaylightLength - yesterdayDaylightLength
 
-                    if longerMoreThanAMinute > 1 {
-                        Message.Kind.longerMoreThanAMinute.rawValue
-                    } else if longerMoreThanAMinute > 0 {
-                        Message.Kind.longerOneMinute.rawValue
+                    if addedTimeInSeconds > 150 {
+                        kindRawValue = Message.Kind.longerMoreThanAMinute.rawValue
+                    } else if addedTimeInSeconds > 60 {
+                        kindRawValue = Message.Kind.longerOneMinute.rawValue
                     } else {
-                        Message.Kind.longerLessThanAMinute.rawValue
+                        kindRawValue = Message.Kind.longerLessThanAMinute.rawValue
                     }
                 } else {
-                    let shorterMoreThanAMinute = yesterdayDaylightLength - todayDaylightLength > 60
+                    let subtractedTimeInSeconds = yesterdayDaylightLength - todayDaylightLength
 
-                    if shorterMoreThanAMinute > 1 {
-                        Message.Kind.shorterMoreThanAMinute.rawValue
-                    } else if shorterMoreThanAMinute > 0 {
-                        Message.Kind.shorterOneMinute.rawValue
+                    if subtractedTimeInSeconds > 150 {
+                        kindRawValue = Message.Kind.shorterMoreThanAMinute.rawValue
+                    } else if subtractedTimeInSeconds > 60 {
+                        kindRawValue = Message.Kind.shorterOneMinute.rawValue
                     } else {
-                        Message.Kind.shorterLessThanAMinute.rawValue
+                        kindRawValue = Message.Kind.shorterLessThanAMinute.rawValue
                     }
                 }
             }

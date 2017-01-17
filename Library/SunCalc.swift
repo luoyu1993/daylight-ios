@@ -35,6 +35,22 @@ struct SunCalcEngine {
     }()
 
     mutating func calculateTimes(withArguments arguments: [Any]) -> [String: Any] {
+        // Create sun object using coordinates
+        // sun getDay(Date())
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let string = formatter.string(from: Date())
+        let sunObject = self.context.objectForKeyedSubscript("const Sun = new Sun({ latitude: 50.5, longitude: 30.5 });")!
+        print(sunObject)
+
+        let method = self.context.objectForKeyedSubscript("const day = Sun.getDay(new \(string));")!
+        print(method)
+
+        let result = method.toObjectOf(NSDictionary.self)! as! [String: Any]
+        print(result)
+
+
         let getTimesJavaScriptMethod = self.context.objectForKeyedSubscript("getTimes")!
         return getTimesJavaScriptMethod.call(withArguments: arguments)!.toObjectOf(NSDictionary.self)! as! [String: Any]
     }

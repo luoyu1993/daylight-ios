@@ -118,29 +118,19 @@ class MessageTests: XCTestCase {
         let messageGenerator = MessageGenerator()
 
         let hashValue = messageGenerator.hashValue(forDay: Date())
-        let oneMinuteMessage = messageGenerator.generateMessage(forHashValue: hashValue, sunPhase: .dawn, yesterdayDaylightLength: 0, todayDaylightLength: 60, tomorrowDaylightLength: 0)
+        let oneMinuteMessage = messageGenerator.generateMessageTest(forHashValue: hashValue, sunPhase: .dawn, yesterdayDaylightLength: 0, todayDaylightLength: 60, tomorrowDaylightLength: 0)
 
-        let format = NSLocalizedString("number_of_minutes", comment: "")
-        let oneMinuteString = String.localizedStringWithFormat(format, 1)
-        let formattedMessage = String(format: oneMinuteMessage.format, oneMinuteString)
-
-        let message = Message(format: formattedMessage)
-
-        XCTAssertTrue(message.content.contains("minute"))
+        XCTAssertTrue(oneMinuteMessage.content.contains("minute"))
+        XCTAssertFalse(oneMinuteMessage.content.contains("minutes"))
     }
 
     func testPluralizations() {
         let messageGenerator = MessageGenerator()
 
         let hashValue = messageGenerator.hashValue(forDay: Date())
-        let oneMinuteMessage = messageGenerator.generateMessage(forHashValue: hashValue, sunPhase: .dawn, yesterdayDaylightLength: 0, todayDaylightLength: 120, tomorrowDaylightLength: 0)
+        let twoMinuteMessage = messageGenerator.generateMessageTest(forHashValue: hashValue, sunPhase: .dawn, yesterdayDaylightLength: 0, todayDaylightLength: 120, tomorrowDaylightLength: 0)
 
-        let format = NSLocalizedString("number_of_minutes", comment: "")
-        let oneMinuteString = String.localizedStringWithFormat(format, 2)
-        let formattedMessage = String(format: oneMinuteMessage.format, oneMinuteString)
-
-        let message = Message(format: formattedMessage)
-
-        XCTAssertTrue(message.content.contains("minutes"))
+        XCTAssertTrue(twoMinuteMessage.content.contains("minutes"))
+        XCTAssertFalse(twoMinuteMessage.content.contains("_"))
     }
 }

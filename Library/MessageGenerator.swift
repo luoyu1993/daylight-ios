@@ -4,7 +4,7 @@ struct MessageGenerator {
     let informationMessage = Message(format: "Daylight is an experiment inspired by the dark and long winters of the north. Made by **Bakken & Bæck**.")
 
     func message(forDay day: Date, sunPhase: SunPhase, yesterdayDaylightLength: Double, todayDaylightLength: Double, tomorrowDaylightLength: Double) -> Message {
-        let message = self.generateMessage(forHashValue: self.hashValue(forDay: day), sunPhase: sunPhase, yesterdayDaylightLength: yesterdayDaylightLength, todayDaylightLength: todayDaylightLength, tomorrowDaylightLength: tomorrowDaylightLength)
+        let message = self.generateMessageTest(forHashValue: self.hashValue(forDay: day), sunPhase: sunPhase, yesterdayDaylightLength: yesterdayDaylightLength, todayDaylightLength: todayDaylightLength, tomorrowDaylightLength: tomorrowDaylightLength)
         return message
     }
 
@@ -188,5 +188,41 @@ struct MessageGenerator {
         case .shorterTomorrowLessThanAMinute:
             return self.shorterTomorrowLessThanAMinuteMessage(for: hashValue)
         }
+    }
+
+    func generateMessageTest(forHashValue hashValue: UInt32, sunPhase: SunPhase, yesterdayDaylightLength: Double, todayDaylightLength: Double, tomorrowDaylightLength: Double) -> Message {
+        let messageKind = Message.Kind(sunPhase: sunPhase, yesterdayDaylightLength: yesterdayDaylightLength, todayDaylightLength: todayDaylightLength, tomorrowDaylightLength: tomorrowDaylightLength)
+
+        var message = Message(format: "")
+        switch messageKind {
+        case .longerMoreThanAMinute:
+            message = self.longerMoreThanAMinuteMessage(for: hashValue)
+        case .longerLessThanAMinute:
+            message = self.longerLessThanAMinuteMessage(for: hashValue)
+        case .shorterMoreThanAMinute:
+            message = self.shorterMoreThanAMinuteMessage(for: hashValue)
+        case .shorterLessThanAMinute:
+            message = self.shorterLessThanAMinuteMessage(for: hashValue)
+        case .longerTomorrowMoreThanAMinute:
+            message = self.longerTomorrowMoreThanAMinuteMessage(for: hashValue)
+        case .longerTomorrowLessThanAMinute:
+            message = self.longerTomorrowLessThanAMinuteMessage(for: hashValue)
+        case .shorterTomorrowMoreThanAMinute:
+            message = self.shorterTomorrowMoreThanAMinuteMessage(for: hashValue)
+        case .shorterTomorrowLessThanAMinute:
+            message = self.shorterTomorrowLessThanAMinuteMessage(for: hashValue)
+        }
+
+        //WARNING: this doesnt work for night messages, the interval should be calculated differently
+        // But we should implement that combined with how we decide what kind of message we need
+        let interval = Location.current?.dayLengthDifference ?? 0
+        let minutesRounded = Int(Darwin.round(interval / 60.0))
+
+        let format = NSLocalizedString("number_of_minutes", comment: "")
+        let minuteString = String.localizedStringWithFormat(format, minutesRounded)
+
+        let formattedMessage = String(format: message.format, minuteString)
+
+        return Message(format: formattedMessage)
     }
 }

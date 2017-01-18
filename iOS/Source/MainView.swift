@@ -186,18 +186,10 @@ class MainView: UIView {
             let sunPhase = location.sunPhase
             let (backgroundColor, textColor) = Theme.colors(for: sunPhase)
 
-            let interval = location.dayLengthDifference
-
             let messageGenerator = MessageGenerator()
-            let minutesRounded = Int(Darwin.round(interval / 60.0))
             let generatedMessage = messageGenerator.message(forDay: Date(), sunPhase: location.sunPhase, yesterdayDaylightLength: location.yesterdayDaylightLength, todayDaylightLength: location.todayDaylightLength, tomorrowDaylightLength: location.tomorrowDaylightLength)
 
-            let format = NSLocalizedString("number_of_minutes", comment: "")
-            let minuteString = String.localizedStringWithFormat(format, minutesRounded)
-            let formattedMessage = String(format: generatedMessage.format, minuteString)
-
-            let message = Message(format: formattedMessage)
-            let attributedString = message.attributedString(withTextColor: textColor)
+            let attributedString = generatedMessage.attributedString(withTextColor: textColor)
 
             UIView.animate(withDuration: 0.4) {
                 self.backgroundColor = backgroundColor

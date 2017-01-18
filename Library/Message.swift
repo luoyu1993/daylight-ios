@@ -15,6 +15,8 @@ struct Message {
         case shorterTomorrowMoreThanAMinute
         case shorterTomorrowLessThanAMinute
 
+        // We should rewrite this method. Here the actual daylight difference get's calculated to decide what Kind of message we show.
+        // But we should use this same daylight difference calculation for the number we use in the message.
         init(sunPhase: SunPhase, yesterdayDaylightLength: Double, todayDaylightLength: Double, tomorrowDaylightLength: Double) {
             var kindRawValue = 0
 

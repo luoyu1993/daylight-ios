@@ -52,6 +52,16 @@ class MainController: UIViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+            UIApplication.shared.setAlternateIconName("AppIcon") { err in
+                print(err)
+            }
+        })
+    }
+
     @objc func updateInterface() {
         self.rootView.updateInterface(location: Location.current)
     }
